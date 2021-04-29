@@ -1,4 +1,4 @@
-package org.dgsw.ensemble.presentation.view
+package org.dgsw.ensemble.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

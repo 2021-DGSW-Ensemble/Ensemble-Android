@@ -1,6 +1,5 @@
-package org.dgsw.ensemble.model.repository.abstract
+package org.dgsw.ensemble.model.repository.abstraction
 
-import android.provider.MediaStore
 import org.dgsw.ensemble.model.model.VideoData
 
 interface VideoRepository {

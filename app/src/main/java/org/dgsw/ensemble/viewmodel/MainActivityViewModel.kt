@@ -1,36 +1,37 @@
 package org.dgsw.ensemble.viewmodel
 
-import SingleLiveEvent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import org.dgsw.ensemble.model.model.VideoData
 import org.dgsw.ensemble.model.repository.MemoryVideoRepository
 import org.dgsw.ensemble.model.repository.abstraction.VideoRepository
+import javax.inject.Inject
 
-class MainActivityViewModel(private val videoRepository: VideoRepository) : ViewModel() {
+@HiltViewModel
+class MainActivityViewModel @Inject constructor(
+    private val videoRepository: VideoRepository
+) : ViewModel() {
 
-
-    private val videoDataArrayListMutableLiveData = MutableLiveData<ArrayList<VideoData>>()
+    private val videoDataList: MutableList<VideoData> = ArrayList()
+    private val videoDataListMutableLiveData = MutableLiveData<List<VideoData>>()
     private var page = 0L
 
 
     init {
-        videoRepository.getVideoList((page++) * 20,20)
+        fetchVideoList()
     }
 
-
-
-    fun onButtonClick() {
-
+    fun fetchVideoList() {
+        videoDataList.addAll(videoRepository.getVideoList((page++) * 20,20))
+        videoDataListMutableLiveData.value = videoDataList
     }
 
-    fun getVideoList(): List<VideoData> =
-            videoRepository.getVideoList((page++) * 20,20)
+    fun getVideoDataListMutableLiveData() : LiveData<List<VideoData>>
+        = videoDataListMutableLiveData
 
-    fun getVideoDataArrayListLiveData() : LiveData<ArrayList<VideoData>>
-    = videoDataArrayListMutableLiveData
-
+    fun getVideoDataList(): List<VideoData> = videoDataList
 
 }
 //TODO: getItem using view model

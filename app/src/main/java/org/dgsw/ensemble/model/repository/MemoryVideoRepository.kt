@@ -2,9 +2,10 @@ package org.dgsw.ensemble.model.repository
 
 import org.dgsw.ensemble.model.model.VideoData
 import org.dgsw.ensemble.model.repository.abstraction.VideoRepository
+import javax.inject.Inject
 
 
-class MemoryVideoRepository : VideoRepository {
+class MemoryVideoRepository @Inject constructor() : VideoRepository {
 
     private val videoList: java.util.ArrayList<VideoData> = java.util.ArrayList()
 

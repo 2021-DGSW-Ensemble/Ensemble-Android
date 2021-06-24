@@ -14,7 +14,7 @@ fun bindDate(view: TextView, time: Long) {
 }
 
 @BindingAdapter("bindThumbnail")
-fun bindThumbnail(view: ImageView, url: String?) {
+fun bindThumbnail(view: ImageView, url: String) {
     if (url == null || url.isEmpty()) return
     //if (true) return
     Glide.with(view)

@@ -33,7 +33,7 @@ class VideoAdapter(
 
         /* Bind video name and data. */
         fun bind(video: VideoData) {
-            this.binding.video = video;
+            this.binding.model = video;
         }
     }
 }

@@ -11,12 +11,15 @@ import org.dgsw.ensemble.R
 
 class VideoActivity : AppCompatActivity() {
 
+    private val DEFAULT_URL = "http://sites.google.com/site/ubiaccessmobile/sample_video.mp4"
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState) 
         setContentView(R.layout.activity_video)
 
-        val url = "http://sites.google.com/site/ubiaccessmobile/sample_video.mp4"
-        val VideoUrl = "http://192.168.0.26:8080/video/2-testtest.mp4"
+        val url = intent.getStringExtra("url") ?: DEFAULT_URL
+
+        //val VideoUrl = "http://192.168.0.26:8080/video/2-testtest.mp4"
 
         val mVv = findViewById<VideoView>(R.id.videoView)
         val btnStart = findViewById<Button>(R.id.btnStart)

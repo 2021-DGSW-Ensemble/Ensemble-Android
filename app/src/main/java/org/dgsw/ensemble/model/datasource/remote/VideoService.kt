@@ -7,7 +7,7 @@ import retrofit2.http.Path
 
 interface VideoService {
 
-    @GET("galleries/{id}.js")
+    @GET("api/v1/video_list")
     fun getVideoList(@Path("offset") offset: Long, @Path("amount") amount: Long): Call<ResponseBody>
 
 

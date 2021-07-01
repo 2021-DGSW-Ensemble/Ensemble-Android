@@ -27,6 +27,14 @@ class VideoAdapter(
         holder.bind(video)
     }
 
+    override fun getItem(position: Int): VideoData {
+        return videoDataList[position]
+    }
+
+    override fun getItemCount(): Int {
+        return videoDataList.size
+    }
+
     /* ViewHolder for Flower, takes in the inflated view and the onClick behavior. */
     class VideoViewHolder(private val binding: ItemListBinding) :
         RecyclerView.ViewHolder(binding.root) {

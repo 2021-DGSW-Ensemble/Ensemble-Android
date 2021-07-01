@@ -3,13 +3,19 @@ package org.dgsw.ensemble.view
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.MediaController
 import android.widget.Toast
 import android.widget.VideoView
 import org.dgsw.ensemble.R
+import org.dgsw.ensemble.di.module.RetrofitModule
 
 class VideoActivity : AppCompatActivity() {
+
+    companion object {
+        val TAG = VideoActivity::class.java.simpleName
+    }
 
     private val DEFAULT_URL = "http://sites.google.com/site/ubiaccessmobile/sample_video.mp4"
 
@@ -17,8 +23,11 @@ class VideoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState) 
         setContentView(R.layout.activity_video)
 
-        val url = intent.getStringExtra("url") ?: DEFAULT_URL
+        val url = if (intent.hasExtra("url")) {
+            "${RetrofitModule.URL}/${intent.getStringExtra("url")}"
+        } else DEFAULT_URL
 
+        Log.i(TAG, "start video $url")
         //val VideoUrl = "http://192.168.0.26:8080/video/2-testtest.mp4"
 
         val mVv = findViewById<VideoView>(R.id.videoView)

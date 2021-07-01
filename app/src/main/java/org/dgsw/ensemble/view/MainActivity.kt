@@ -8,6 +8,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import org.dgsw.ensemble.R
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         val videoAdapter = VideoAdapter(viewModel.getVideoDataList())
         val recyclerView = findViewById<RecyclerView>(R.id.main_list)
         recyclerView.adapter = videoAdapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addOnItemTouchListener(RecyclerItemClickListener(this, object: RecyclerItemClickListener.OnItemClickListener.Normal {
             override fun onItemClick(view: View, position: Int) {
                 val model = viewModel.getVideoDataList()[position];
@@ -45,7 +47,13 @@ class MainActivity : AppCompatActivity() {
             videoAdapter.notifyDataSetChanged()
             // TODO : apply diffutil in this mechanism.
         })
-
     }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.fetchFirst()
+    }
+
+
 
 }

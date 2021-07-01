@@ -1,5 +1,7 @@
 package org.dgsw.ensemble.model.repository
 
+import com.google.gson.JsonElement
+import com.google.gson.JsonParser
 import org.dgsw.ensemble.model.datasource.remote.VideoService
 import org.dgsw.ensemble.model.model.VideoData
 import org.dgsw.ensemble.model.repository.abstraction.VideoRepository
@@ -17,19 +19,19 @@ class RemoteVideoRepository @Inject constructor(
         val responseBody = videoService.getVideoList(offset, amount).execute().body()
         val jsonString = responseBody!!.string()
 
-        val jsonArray = JSONArray(jsonString)
+        val jsonArray = JsonParser().parse(jsonString).asJsonArray
 
-        val length = jsonArray.length()
+        val length = jsonArray.size()
         val videoDataList: MutableList<VideoData> = ArrayList(length)
         for (i in 0 until length) {
-            val item = jsonArray[i] as JSONObject
+            val item = jsonArray[i].asJsonObject
             val videoData = VideoData(
-                item["id"] as Long,
-                item["name"] as String,
-                item["path"] as String,
-                item["thumbnail"] as String?,
-                item["time"] as Long,
-                item["progress"] as Float,
+                item["id"].asLong,
+                item["name"].asString,
+                item["url"].asString,
+                safe(item["thumbnail"])?.asString ?: "",
+                item["time"].asLong,
+                safe(item["progress"])?.asFloat ?: 0.0f,
             )
             videoDataList.add(videoData)
         }
@@ -39,5 +41,7 @@ class RemoteVideoRepository @Inject constructor(
 
     override fun findVideo(id: Long): VideoData? = null
 
+    private fun safe(element: JsonElement): JsonElement? =
+        if (element.isJsonNull) null else element
 
 }

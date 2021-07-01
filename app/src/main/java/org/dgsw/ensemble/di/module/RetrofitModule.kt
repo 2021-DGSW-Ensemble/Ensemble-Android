@@ -12,7 +12,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class RetrofitModule {
 
-    private val URL = "http://192.168.0.26:8080"
+    companion object {
+        const val URL = "http://192.168.0.26:8080"
+    }
 
     @Provides
     @Singleton
